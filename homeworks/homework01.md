@@ -6,6 +6,9 @@
 
 ### Think OS Chapter 1 reading questions
 
+For each of the reading questions below, write answers in the form of
+a clear, concise, complete sentence or two.
+
 1) Give an example of a feature common in interpreted languages that is rare in compiled languages.
 
 Dynamic types are common in interpreted languages, but rare in compiled ones. For example, in Python, we don't need to declare the types of variables we create, but in C we do.
@@ -28,6 +31,7 @@ Different computers might have different architectures or assembly languages. Si
 
 6) If you spell a variable name wrong, or if you spell a function name wrong, the error messages 
 you get might look very different.  Why?
+
 
 The checks for these errors are made at differents stages in the compilation process. Each stage has a different way of presenting errors.
 

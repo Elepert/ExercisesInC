@@ -10,11 +10,12 @@ License: GNU GPLv3
 
 #define SIZE 5
 
+// returns the address of array rather the value of array
 int *foo() {
     int i;
     int array[SIZE];
 
-    //printf("%p\n", array);
+    printf("%p\n", array);
 
     for (i=0; i<SIZE; i++) {
         array[i] = 42;
@@ -22,17 +23,22 @@ int *foo() {
     return array;
 }
 
+// creates an array that ends up being stored at the same 
+//address in the stack as foo's array
 void bar() {
     int i;
     int array[SIZE];
 
-    //printf("%p\n", array);
+    printf("%p\n", array);
 
     for (i=0; i<SIZE; i++) {
         array[i] = i;
     }
 }
 
+// wants to print out foo's array's values, but doesn't
+// actually do that bc the address of foo's array was 
+// overwritten 
 int main()
 {
     int i;

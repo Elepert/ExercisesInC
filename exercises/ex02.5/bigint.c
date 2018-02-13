@@ -23,6 +23,8 @@ Follow these steps to get this program working:
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <ctype.h>
+#include <math.h>
 
 /* reverse_string: Returns a new string with the characters reversed.
 
@@ -32,8 +34,14 @@ s: string
 returns: string
 */
 char *reverse_string(char *s) {
-    //TODO: Fill this in.
-    return "";
+	char *reversed_s = malloc(sizeof (char) * strlen(s));
+	reversed_s[strlen(s)] = '\0';
+	int j = 0;
+	for (int i = strlen(s)-1; i>=0; i--){
+		reversed_s[j] = s[i];
+		j++;
+	}
+    return reversed_s;
 }
 
 /* ctoi: Converts a character to integer.
@@ -52,8 +60,9 @@ i: integer 0 to 9
 returns: character '0' to '9'
 */
 char itoc(int i) {
+	assert(i<10 && i>=0);
     //TODO: Fill this in, with an appropriate assertion.
-    return '0';
+    return i+'0';
 }
 
 /* add_digits: Adds two decimal digits, returns the total and carry.
@@ -69,7 +78,13 @@ carry: pointer to char
 
 */
 void add_digits(char a, char b, char c, char *total, char *carry) {
-    //TODO: Fill this in.
+    a = ctoi(a);
+    b = ctoi(b);
+    c = ctoi(c);
+    int res = a+b+c;
+    *total = itoc(res%10);
+    *carry = itoc(floor(res/10));
+
 }
 
 /* Define a type to represent a BigInt.
@@ -204,6 +219,6 @@ int main (int argc, char *argv[])
 
     //TODO: When you have the first three functions working,
     //      uncomment the following, and it should work.
-    // test_add_bigint();
+    test_add_bigint();
     return 0;
 }

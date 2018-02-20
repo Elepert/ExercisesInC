@@ -27,8 +27,20 @@ returns: 1 if true, 0 otherwise
 */
 int endswith(char *s, char *suffix)
 {
-    // TODO: Fill this in!
-    return 0;
+    if (strlen(s)<strlen(suffix)){
+    	return 0;
+    }
+    int j = 0;
+    for (int i=strlen(s)-strlen(suffix); i<strlen(s);i++){
+    	printf("s is %c and suffix is %c\n",s[i], suffix[j]);
+    	if (s[i]!=suffix[j]){
+    		return 0;
+    	}
+    	j++;
+    }
+    
+    
+    return 1;
 }
 
 

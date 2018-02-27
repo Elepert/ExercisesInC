@@ -2,7 +2,7 @@
 
 Reflect: what worked, what slowed you down? What would you do differently next time?
 Using the HFC book as a baseline worked really well. It helped me
-get started. Figuring out how to write to a file in C took a bit.
+get started. Figuring out how to order everything took a bit.
 Refreshing myself on input handling also took a bit. Next time I
 would write out pseudocode and map out more what my plan is ahead of time.
 I think I jumped from section to section a lot because I hadn't created a 

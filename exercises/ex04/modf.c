@@ -32,16 +32,6 @@ length: number of elements in the array
 returns: new array, caller must free
 */
 // TODO: Write this function
-double* get_int_part(double inputa[], int num){
-    
-    double* outputa[num];
-    printf("%f", **outputa);
-    for (int i = 0; i<num; i++){
-        modf(inputa[i], outputa[i]);
-    }
-    
-    return *outputa;
-}
 
 void test_get_int_part()
 {
@@ -67,7 +57,7 @@ p: location where the address of the frac_array should go
 returns: new array, caller must free
 */
 //TODO: Write this function
-/*
+
 
 void test_get_both_parts()
 {
@@ -86,10 +76,10 @@ void test_get_both_parts()
         assert(frac_part[i] == expected_frac[i]);
     }
 }
-*/
+
 int main (int argc, char *argv[])
 {
     test_get_int_part();
-    //test_get_both_parts();
+    test_get_both_parts();
     printf("All tests passed\n");
 }

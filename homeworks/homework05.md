@@ -29,7 +29,7 @@ Exponents need to be signed, but using two's complement would make that difficul
 4) Following the example in Section 5.3, write the 32-bit binary representation of -13 in single precision 
 IEEE floating-point.  What would you get if you accidentally interpreted this value as an integer?
 
-13 as a single precision floating point is 1.101 * 2^3 so -13 would be 1.0010 * 2^4. As an integer in base 10 we would interpret it as 16.
+13 as an unsigned single precision floating point is 1.101 * 2^3 so -13 would be 1.0011 * 2^4. The number to the left of the period is the sign (1 for -). To the right of the period is 13 in binary, with each bit flipped and then adding 1. As an integer in base 10 we would interpret it as 16.
 
 5) Write a function that takes a string and converts from lower-case to upper-case by flipping the sixth bit.  
 As a challenge, you can make a faster version by reading the string 32 or 64 bits at a time, rather than one

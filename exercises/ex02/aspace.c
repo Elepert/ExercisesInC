@@ -22,12 +22,13 @@ int main ()
     void *try = malloc(200);
     char *s = "Literal string";
 
-    printf ("Address of main is %p\n", main);
-    printf ("Address of var1 is %p\n", &var1);
-    printf ("Address of var2 is %p\n", &var2);
+
     printf ("Address of p is %p\n", p);
     printf ("Address of try is %p\n", try);
     printf ("Address of s is %p\n", s);
+
+    printf ("p points to %p\n", p);
+    printf ("s points to %p\n", s);
 
     void *n1 = malloc(30);
     void *n2 = malloc(23);

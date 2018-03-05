@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 """Read floating point values and plot their CDF.
-
 Copyright 2016 Allen B. Downey
 License: GNU GPLv3 http://www.gnu.org/licenses/gpl.html
 """
@@ -43,4 +42,4 @@ def main(script, filename=None):
 
 
 if __name__ == '__main__':
-    main(*sys.argv)
+	main(*sys.argv)

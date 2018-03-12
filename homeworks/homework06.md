@@ -20,23 +20,29 @@ I'd expect "calloc" to be proportional because it needs to clear all the bytes i
 
     a) Reading from unallocated memory.
     
-        Instead of throwing an error, the program might just read whatever is at that location in memory. This data will be gibberish for us and if the program interprets the data as the wrong type we can get really wonky results.
+        Instead of throwing an error, the program might just read whatever is at that location in memory. 
+        This data will be gibberish for us and if the program interprets the data as the wrong type we can 
+        get really wonky results.
 
     b) Writing to unallocated memory.
     
-        Writing to unallocated memory can cause problems later on. Because the memory wasn't allocated properly, you might be writing over something important and mess up data structures or data.
+        Writing to unallocated memory can cause problems later on. Because the memory wasn't allocated 
+        properly, you might be writing over something important and mess up data structures or data.
 
     c) Reading from a freed chunk.
     
-        Reading from a freed chunk expecting to find the old data won't necessarily work because that space might have been used for something else. There is no guarantee that the old information is still there.
+        Reading from a freed chunk expecting to find the old data won't necessarily work because that space 
+        might have been used for something else. There is no guarantee that the old information is still there.
 
     d) Writing to a freed chunk.
     
-        Similarly to reading from a freed chunk, writing to it will work, however you could be overwriting some other information or your new information could be overwritten later on.
+        Similarly to reading from a freed chunk, writing to it will work, however you could be overwriting 
+        some other information or your new information could be overwritten later on.
 
     e) Failing to free a chunk that is no longer needed.
         
-        For a large program this can cause problems when there is no longer any physical memory or space for the system. This means that the next call to "malloc" will return NULL. 
+        For a large program this can cause problems when there is no longer any physical memory or space for 
+        the system. This means that the next call to "malloc" will return NULL. 
 
 
 3) Run

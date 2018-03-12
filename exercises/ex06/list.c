@@ -54,8 +54,12 @@ void print_list(Node **list) {
 * returns: int or -1 if the list is empty
 */
 int pop(Node **list) {
-    // FILL THIS IN!
-    return 0;
+    Node *first = *list;
+    if (first->next == NULL){
+        return -1;
+    }
+    *list = first->next;
+    return first->val;
 }
 
 
@@ -65,7 +69,8 @@ int pop(Node **list) {
 * val: value to add
 */
 void push(Node **list, int val) {
-    // FILL THIS IN!
+    Node *new = make_node(val, *list);
+    *list = new;
 }
 
 
@@ -79,8 +84,22 @@ void push(Node **list, int val) {
 * returns: number of nodes removed
 */
 int remove_by_value(Node **list, int val) {
-    // FILL THIS IN!
-    return 0;
+    int found = 0;
+    Node *temp = *list;
+    Node *tempB = *list;
+    while (found != 1 && temp != NULL){
+    
+        if (temp->val == val){
+            tempB->next = temp->next;
+            free(temp);
+            found = 1;
+        }
+        tempB = temp;;
+        temp = temp->next;
+
+    }
+
+    return found;
 }
 
 
@@ -91,7 +110,17 @@ int remove_by_value(Node **list, int val) {
 * list: pointer to pointer to Node
 */
 void reverse(Node **list) {
-    // FILL THIS IN!
+    Node *current = *list;
+    Node *next = current->next;
+    Node *prev = current;
+    prev->next = NULL;
+    while (next != NULL){
+        current = next;
+        next = current->next;
+        current->next = prev;
+        prev = current;
+    }
+    *list =current;   
 }
 
 

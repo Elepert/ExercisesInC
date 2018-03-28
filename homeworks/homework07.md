@@ -13,10 +13,15 @@ student repository.
 
 1) What happens if a program writes a new value into the program counter?
 
+When the program writes a new value into the program counter, the flow of execution goes to another section in the program. There is a new address so it points to new instructions for the program.
+
 2) What is the fundamental problem caches are meant to solve?
 
-3) If cache access time is 1 ns and memory access time is 10 ns, what is the average
-access time of a program with hit rate 50%?  How about 90%?
+For most programs, transfer of data in memory is what slows down a program, not executing instructions. Caching is meant to reduce the time it takes for the program to access the memory it needs.
+
+3) If cache access time is 1 ns and memory access time is 10 ns, what is the average access time of a program with hit rate 50%?  How about 90%?
+
+
 
 4) The book gives several examples of programming language features, like loops, that tend 
 to improve locality in the access pattern of instructions and/or data.  Can you think of other examples?  

@@ -40,9 +40,9 @@ I found two CPUs with $21/MB (for 8MB) or $22,500/GiB and $18/MB (for 6MB) or $1
 
 7) Why are cache policies generally more complex at the bottom of the memory hierarchy?
 
-
+At the top of the memory hierarchy, cache policies need to be simple because they should be fast and mostly created in hardware. At the bottom of the hierarchy, they have more time to make decisions and good/complex policies improve performance.
 
 8) Can you think of a strategy operating systems could use to avoid thrashing or recover when it occurs?
 
-
+If operating systems noticed an uptick in paging and blocked or killed processes until the system is more responsive. If thrashing occurs they could kill processes until it stops.
 

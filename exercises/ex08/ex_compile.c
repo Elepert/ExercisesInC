@@ -2,6 +2,8 @@
 
 From http://www.ibm.com/developerworks/linux/tutorials/l-glib/
 
+gcc -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include-lglib-2.0 -o ex_compile ex_compile.c
+
 */
 
 #include <stdio.h>

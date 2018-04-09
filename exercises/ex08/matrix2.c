@@ -54,11 +54,20 @@ void print_matrix(Matrix *matrix) {
     }
 }
 
+double comparator(const void *p, const void *q) 
+{
+    double l = *(double*)p;
+    double r = *(double*)q; 
+    return (l - r);
+}
+
 /* Sort rows in descending order by first element.
 */
 void sort_matrix_rows(Matrix *matrix) {
-    // TODO: Write this function
+    qsort(matrix->rows, matrix->num_rows, sizeof(double), comparator);
 }
+
+
 
 /* Perform row reduction.
 

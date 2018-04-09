@@ -14,6 +14,9 @@ License: MIT License https://opensource.org/licenses/MIT
 #include <sys/types.h>
 #include <wait.h>
 
+//global variable I use later to check global sharing
+int sharingGlobal = 1;
+
 
 // errno is an external global variable that contains
 // error information
@@ -30,10 +33,33 @@ double get_seconds() {
 }
 
 
-void child_code(int i)
+void child_code(int i, int *sharingHeap, int sharingStack)
 {
     sleep(i);
-    printf("Hello from child %d.\n", i);
+
+    // checks heap sharing. both children print 1 and then 2
+    // rather than 1, 2, 2, 3 which shows that they don't share the heap
+    printf("SharingHeap for child %d is %d\n", i, *sharingHeap);
+    *sharingHeap += 1;
+    printf("SharingHeap for child %d is now %d\n", i, *sharingHeap);
+
+
+    // checks stack sharing. both children print 1 and then 2
+    // rather than 1, 2, 2, 3 which shows that they don't share the stack
+    printf("SharingStack for child %d is %d\n", i, sharingStack);
+    sharingStack += 1;
+    printf("SharingStack for child %d is now %d\n", i, sharingStack);
+
+
+    // checks global sharing. both children print 1 and then 2
+    // rather than 1, 2, 2, 3 which shows that they don't share the stack
+    printf("SharingGlobal for child %d is %d\n", i, sharingGlobal);
+    sharingGlobal += 1;
+    printf("SharingGlobal for child %d is now %d\n", i, sharingGlobal);
+
+
+
+    printf("Hello from child %d.\n\n", i);
 }
 
 // main takes two parameters: argc is the number of command-line
@@ -45,6 +71,14 @@ int main(int argc, char *argv[])
     pid_t pid;
     double start, stop;
     int i, num_children;
+
+    //this variable points to the heap
+    int *sharingHeap = malloc(sizeof(int));
+    //initialized to one, both children print one despite incrementing it above
+    *sharingHeap = 1;
+
+    //this variable is in the stack
+    int sharingStack = 1;
 
     // the first command-line argument is the name of the executable.
     // if there is a second, it is the number of children to create.
@@ -72,7 +106,7 @@ int main(int argc, char *argv[])
 
         /* see if we're the parent or the child */
         if (pid == 0) {
-            child_code(i);
+            child_code(i, sharingHeap, sharingStack);
             exit(i);
         }
     }

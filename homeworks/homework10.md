@@ -11,8 +11,12 @@ student repository.  That's right, Homework 10 is to do Exercise 12.
 
 1) What does it mean to say that a data structure is thread safe?
 
+A datastructure that is thread safe is one that can be accessed by multiple threads without any errors popping up or data being accessed at the wrong times.
+
 2) In the circular buffer implementation of a queue, why is the maximum number of elements in the queue `n-1`,
 if `n` is the size of the array?
+
+If we add n elements to the array then next_in and next_out will point to each other which will make the program think that it is empty. By never making them able to point to each other, we remove that problem.
 
 3) If there is no mutex to protect the queue, give an example of a sequence of steps that could leave
 the queue in an inconsistent state.

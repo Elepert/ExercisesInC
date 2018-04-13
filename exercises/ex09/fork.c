@@ -37,7 +37,7 @@ void child_code(int i, int *sharingHeap, int sharingStack)
 {
     sleep(i);
 
-    // checks heap sharing. both children print 1 and then 2
+    /*// checks heap sharing. both children print 1 and then 2
     // rather than 1, 2, 2, 3 which shows that they don't share the heap
     printf("SharingHeap for child %d is %d\n", i, *sharingHeap);
     *sharingHeap += 1;
@@ -56,7 +56,7 @@ void child_code(int i, int *sharingHeap, int sharingStack)
     printf("SharingGlobal for child %d is %d\n", i, sharingGlobal);
     sharingGlobal += 1;
     printf("SharingGlobal for child %d is now %d\n", i, sharingGlobal);
-
+    */
 
 
     printf("Hello from child %d.\n\n", i);

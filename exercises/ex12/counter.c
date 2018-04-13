@@ -98,6 +98,7 @@ int main()
     }
 
     for (i=0; i<NUM_CHILDREN; i++) {
+        printf ("Address of Child %d is %p\n", i, &child[i]);
         join_thread(child[i]);
     }
 

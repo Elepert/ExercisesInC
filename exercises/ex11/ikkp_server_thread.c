@@ -14,6 +14,7 @@ Modified by Allen Downey.
 #include <sys/types.h>
 #include <unistd.h>
 #include <signal.h>
+#include <pthread.h>
 
 int listener_d = 0;
 
@@ -55,10 +56,10 @@ int open_listener_socket(void) {
 
 /* Wait for clients to connect.
 */
-int open_client_socket(void) {
+long open_client_socket(void) {
     static struct sockaddr_storage client_address;
     static unsigned int address_size = sizeof(client_address);
-    int s;
+    long s;
 
     if ((s = accept(listener_d, (struct sockaddr *)&client_address,
     &address_size)) == -1)
@@ -133,6 +134,36 @@ int read_in(int socket, char *buf, int len)
 
 char intro_msg[] = "Internet Knock-Knock Protocol Server\nKnock, knock.\n";
 
+void* play_knock(void *arg){
+
+    char buf[255];
+
+    int connect_d = (long) arg;
+    if (say(connect_d, intro_msg) == -1) {
+        close(connect_d);
+        return;
+    }
+
+    read_in(connect_d, buf, sizeof(buf));
+    // TODO (optional): check to make sure they said "Who's there?"
+
+    if (say(connect_d, "Surrealist giraffe.\n") == -1) {
+        close(connect_d);
+        return;
+    }
+
+    read_in(connect_d, buf, sizeof(buf));
+    // TODO (optional): check to make sure they said "Surrealist giraffe who?"
+
+    if (say(connect_d, "Bathtub full of brightly-colored machine tools.\n") == -1) {
+        close(connect_d);
+        return;
+    }
+
+    close(connect_d);
+}
+
+
 int main(int argc, char *argv[])
 {
     char buf[255];
@@ -142,41 +173,27 @@ int main(int argc, char *argv[])
         error("Setting interrupt handler");
 
     // create the listening socket
-    int port = 30002;
+    int port = 30005;
     listener_d = open_listener_socket();
     bind_to_port(listener_d, port);
 
     if (listen(listener_d, 10) == -1)
         error("Can't listen");
 
-
-
     while (1) {
+
+
         printf("Waiting for connection on port %d\n", port);
-        int connect_d = open_client_socket();
+        pthread_t t0;
+        void *res;
 
-        if (say(connect_d, intro_msg) == -1) {
-            close(connect_d);
-            continue;
+        long connect_d = open_client_socket();
+
+        if(pthread_create(&t0, NULL, play_knock, (void*) connect_d) == -1){
+          error("can't create thread");
         }
 
-        read_in(connect_d, buf, sizeof(buf));
-        // TODO (optional): check to make sure they said "Who's there?"
-
-        if (say(connect_d, "Surrealist giraffe.\n") == -1) {
-            close(connect_d);
-            continue;
-        }
-
-        read_in(connect_d, buf, sizeof(buf));
-        // TODO (optional): check to make sure they said "Surrealist giraffe who?"
-
-        if (say(connect_d, "Bathtub full of brightly-colored machine tools.\n") == -1) {
-            close(connect_d);
-            continue;
-        }
-
-        close(connect_d);
+        
     }
     return 0;
 }

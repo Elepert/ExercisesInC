@@ -142,7 +142,7 @@ int main(int argc, char *argv[])
         error("Setting interrupt handler");
 
     // create the listening socket
-    int port = 30002;
+    int port = 30003;
     listener_d = open_listener_socket();
     bind_to_port(listener_d, port);
 
@@ -155,28 +155,34 @@ int main(int argc, char *argv[])
         printf("Waiting for connection on port %d\n", port);
         int connect_d = open_client_socket();
 
-        if (say(connect_d, intro_msg) == -1) {
+        if (!fork()){
+            close(listener_d);
+            if (say(connect_d, intro_msg) == -1) {
+                close(connect_d);
+                continue;
+            }
+
+            read_in(connect_d, buf, sizeof(buf));
+            // TODO (optional): check to make sure they said "Who's there?"
+
+            if (say(connect_d, "Surrealist giraffe.\n") == -1) {
+                close(connect_d);
+                continue;
+            }
+
+            read_in(connect_d, buf, sizeof(buf));
+            // TODO (optional): check to make sure they said "Surrealist giraffe who?"
+
+            if (say(connect_d, "Bathtub full of brightly-colored machine tools.\n") == -1) {
+                close(connect_d);
+                continue;
+            }
             close(connect_d);
-            continue;
+            exit(0);
         }
-
-        read_in(connect_d, buf, sizeof(buf));
-        // TODO (optional): check to make sure they said "Who's there?"
-
-        if (say(connect_d, "Surrealist giraffe.\n") == -1) {
-            close(connect_d);
-            continue;
-        }
-
-        read_in(connect_d, buf, sizeof(buf));
-        // TODO (optional): check to make sure they said "Surrealist giraffe who?"
-
-        if (say(connect_d, "Bathtub full of brightly-colored machine tools.\n") == -1) {
-            close(connect_d);
-            continue;
-        }
-
+        
         close(connect_d);
     }
+
     return 0;
 }

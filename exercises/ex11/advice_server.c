@@ -41,7 +41,7 @@ int main()
 
     struct sockaddr_in name;
     name.sin_family = PF_INET;
-    name.sin_port = (in_port_t)htons(30000);
+    name.sin_port = (in_port_t)htons(30001);
     name.sin_addr.s_addr = htonl(INADDR_ANY);
 
     // set socket options

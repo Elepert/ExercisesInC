@@ -18,6 +18,7 @@ License: GNU GPLv3
 typedef struct {
     int counter;
     Mutex *mutex;
+    Cond *cond;
 } Shared;
 
 /* Allocate the shared structure.
@@ -27,6 +28,7 @@ Shared *make_shared()
     Shared *shared = check_malloc(sizeof(Shared));
     shared->counter = 0;
     shared->mutex = make_mutex();
+    shared->cond = make_cond();
     return shared;
 }
 
@@ -34,6 +36,7 @@ Shared *make_shared()
 */
 void child_code(Shared *shared)
 {
+    mutex_lock(shared->mutex);
     // TODO: Rewrite this function so that
     // 1) All access to shared variables is thread safe.
     // 2) No thread prints the ``part 2'' message until after
@@ -46,11 +49,19 @@ void child_code(Shared *shared)
 
     printf("Child part 1\n");
     shared->counter++;
-    while (shared->counter < NUM_CHILDREN) {
+    if (shared->counter < NUM_CHILDREN){
+        cond_wait(shared->cond, shared->mutex);
+    }
+    cond_broadcast(shared->cond);
+    mutex_unlock(shared->mutex);
+    //cond_wait(shared->cond, shared->mutex);
+    /*while (shared->counter < NUM_CHILDREN) {
         // do nothing
         // Running this loop over and over is called busy waiting.
-    }
+    }*/
+    mutex_lock(shared->mutex);
     printf("Child part 2\n");
+    mutex_unlock(shared->mutex);
 }
 
 /* Entry point for the child threads.
